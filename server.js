@@ -1,19 +1,39 @@
 const  express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
+
+const dbConnection = require('./database/connections');
 
 dotenv.config();
 
 const app = express();
 
-const myMiddleware = (res, req, next) => {
-    console.log("hey i am middleware");
-    next();
-};
+// db connection
+dbConnection();
 
-// application level middleware
-app.use(myMiddleware);
-// use above or below
-// app.get('/', myMiddleware, (req,res,ne) 
+// cors
+app.use(cors());
+
+// in built middleware
+// request payload middleware
+// helps in parsing json and form-urlencoded data
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// const myMiddleware = (res, req, next) => {
+//     console.log("hey i am middleware");
+//     next();
+// };
+
+// // application level middleware
+// app.use(myMiddleware);
+// // use above or below
+// // app.get('/', myMiddleware, (req,res,ne) 
+
+// let's use routing
+app.use('/api/v1/product', require('./routes/productRoutes'));
+// app.use('/api/v1/user', require('./routes/userRoutes'));
+
 
 app.get('/', (req,res,ne) => {
     res.send("hello from node api server");
