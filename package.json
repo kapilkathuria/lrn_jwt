@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kapilkathuria/lrn_jwt#readme",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
+    "@hapi/joi": "^15.1.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
