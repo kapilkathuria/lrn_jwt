@@ -1,10 +1,12 @@
-const  express = require('express');
-const dotenv = require('dotenv');
+const express = require('express');
+const dotEnv = require('dotenv');
 const cors = require('cors');
-
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 const dbConnection = require('./database/connections');
 
-dotenv.config();
+dotEnv.config();
 
 const app = express();
 
@@ -34,10 +36,15 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api/v1/product', require('./routes/productRoutes'));
 app.use('/api/v1/user', require('./routes/userRoutes'));
 
+// API Documentation
+if (process.env.NODE_ENV != 'production') {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  }
 
 app.get('/', (req,res,ne) => {
     res.send("hello from node api server");
 });
+
 
 // use port from dotenv, if not specified than use 3000
 const PORT = process.env.PORT || 3000;
