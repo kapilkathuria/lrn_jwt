@@ -14,6 +14,8 @@ const app = express();
 dbConnection();
 
 // cors
+// cross origin request
+// without this user will see error if tried from different domain
 app.use(cors());
 
 // in built middleware
